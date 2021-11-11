@@ -1,0 +1,215 @@
+{% include 'alexadashcams/slider.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 text-center border">
+                <i class="bi bi-truck fs-1"></i>
+                <h4>FREE DELIVERY</h4>
+                <h6>Lorem ipsum dolor sit amet</h6>
+        </div>
+        <div class="col-sm-4 text-center border">
+                    <i class="bi bi-headset fs-1"></i>
+                    <h4>24/7 ONLINE SUPPORT</h4>
+                    <h6>Lorem ipsum dolor sit amet</h6>
+        </div>
+        <div class="col-sm-4 text-center border">
+                    <i class="bi bi-gem fs-1"></i>
+                    <h4 >QUALITY PRODUCTS</h4>
+                    <h6>Lorem ipsum dolor sit amet</h6>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container py-5 text-center">
+            <h3 class="fs-3">WHATS NEW </h3>
+            <h6>Products added recently to our catalog</h6>
+            <i class="bi bi-x-diamond-fill"></i>&nbsp<i class="bi bi-x-diamond-fill"></i>&nbsp<i class="bi bi-x-diamond-fill"></i>&nbsp<i class="bi bi-x-diamond-fill"></i>
+            <div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4 pt-4">
+             
+                @if (count($newproducts) > 0)
+                    @foreach ($newproducts as $newproduct )
+                        <div class="col">
+                          <div class="card">
+                            <img class="ProductImages"src="/storage/cover_images/" alt="...">
+                            <div class="card-body text-start">
+                              <h5 class="card-title text-uppercase">
+                                <a class="text-dark text-decoration-none" href= "">
+                                  </a>
+                                </h5>
+                              <h4 class="card-text text-dark">
+                                KES: 
+                              </h4>
+                    
+                            </div>
+                          </div>
+                        </div>
+                    @endforeach  
+                    @else
+                        <p>NO RECORDS</p>
+                    @endif
+            </div>
+</div>
+
+
+<div class="text-secondary  py-5 text-center" id="Hero">
+  <div class="py-5">
+    <h1 class="display-5 fw-bold text-white">GET A TRUSTED CO-DRIVER</h1>
+    <div class="col-lg-6 mx-auto">
+      <h6 class="fs-7 mb-4 text-white display-hidden">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </h6>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" class="btn btn-outline-light btn-lg px-4 me-sm-3 fw-bold" id="ButtonOne">GET YOURS TODAY</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container py-5 text-center">
+    <h3 class="fs-3" id="Products">PRODUCTS</h3>
+    <h6>Browse through our range of products</h6>
+    <i class="bi bi-x-diamond-fill"></i>&nbsp<i class="bi bi-x-diamond-fill"></i>&nbsp<i class="bi bi-x-diamond-fill"></i>&nbsp<i class="bi bi-x-diamond-fill"></i>
+    <br>
+    <div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4 pt-4">
+  
+            {% for product in products %}
+                <div class="col">
+                  <div class="card">
+                    {% if product.productimage.images.url == "" %}
+                       <img class="ProductImages" src="/static/alexadashcams/images/default.jpg" alt="...">
+                    {% else %}
+                     <img class="ProductImages" src="{{ product.productimage.images.url }}" alt="...">
+                    {% endif %}
+                    <div class="card-body pb-2 text-start">
+                      <h5 class="card-title text-uppercase">
+                        <a class="text-dark text-decoration-none" href= "{% url 'product-detail' product.id %}">{{product.product_name}}</a>
+                        </h5>
+                      <h4 class="card-text text-dark">KES:{{product.product_price}} </h4>
+                    </div>
+
+                  {% comment %} url(r'^cart/products/(?P<product_id>\d+)$', 'carts.views.update_cart', name='update_cart'), {% endcomment %}
+
+                  {% comment %} <form action ="#"  method="POST" enctype="multipart/form-data">
+                 {% comment %} easycart.views.AddItem(**kwargs) {% endcomment %}
+                      {% comment %} <input type="hidden" value="{{product.id}}" name="id">
+                      <input type="hidden" value="{{product.product_name}}" name="name">
+                      <input type="hidden" value="{{product.product_price}}" name="price">
+                      <input type="hidden" value="{{ product.productimage.images.url }}"  name="image">
+                      <input type="hidden" value="1" name="quantity"> {% endcomment %} 
+
+                      {% comment %} <a href="{% url 'cart_add' product.id %}">Add To Cart</a> {% endcomment %}
+                      <a href="{% url 'cart_add' product.id %}"><button class="buy-1">Add To Cart</button></a>
+                  {% comment %} </form> {% endcomment %}
+
+
+
+                  </div>
+                </div>
+            {% endfor %} 
+            <nav aria-label="Page navigation example">
+              <ul class="pagination ">
+                {% if is_paginated %}
+                  {% if page_obj.has_previous %}
+                    <li class="page-item ">
+                      <a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">First</a>
+                    </li>
+                    <li class="page-item ">
+                      <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                  {% endif%}
+                  
+                  {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                      {% comment %} <a class="btn btn-outline-dark mb-4" href="?page={{ num }}">{{ num }} </a> {% endcomment %}
+                    {% endif%}
+                  {% endfor %}
+
+                  {% if page_obj.has_next  %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ page_obj.next_page_number}}">Next</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                    </li>
+                  {% endif%}
+
+                {% endif%}
+              </ul>
+            </nav>
+                
+
+                
+            
+    </div>
+</div>
+
+    <div class="container pt-1 text-center">
+      <h6 class="border-bottom"> </h6>
+        <h3 class="fs-3 pt-5 ">ABOUT US</h3>
+        <i class="bi bi-x-diamond-fill"></i>&nbsp<i class="bi bi-x-diamond-fill"></i>&nbsp<i class="bi bi-x-diamond-fill"></i>&nbsp<i class="bi bi-x-diamond-fill"></i>
+        <div class="container col-xxl-8 px-4 py-5">
+          <div class="row flex-lg-row-reverse align-items-center g-5 py-2">
+            <div class="col-10 col-sm-8 col-lg-6">
+              <img src="/static/alexadashcams/images/ALEXA IG POST.png" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+            </div>
+            <div class="col-lg-6 text-start">
+              
+              <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+              
+            </div>
+          </div>
+        </div>
+    </div>
+<div class="container-fluid bg-light text-center py-5">
+    <h3 class="fs-3 ">OUR PARTNERS</h3>
+    <i class="bi bi-x-diamond-fill"></i>&nbsp<i class="bi bi-x-diamond-fill"></i>&nbsp<i class="bi bi-x-diamond-fill"></i>&nbsp<i class="bi bi-x-diamond-fill"></i>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-lg-6 row-cols-md-2 g-4 pt-5">
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+              <img src="/static/alexadashcams/images/viofo_logo.png" alt="...">
+            </div>
+            <div class="col">
+              <img src="/static/alexadashcams/images/blackvue_logo.png" class="d-block w-100" alt="...">
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-5">
+
+</div>
+<footer class="footer mt-auto py-3  bg-dark">
+    <div class="container text-center">
+      <div class="row text-start pt-3">
+        <div class="col-sm-4">
+          <h4 class="text-light fs-4">CONTACT INFO</h4>
+          <p class="text-light mb-1 fs-6">&nbsp<i class="bi bi-phone-fill text-light"></i> <span class=" fw-normal fst-normal">PHONE:</span> 07XX XXX XXX</p>
+          
+          <p class="text-light fs-6">&nbsp<i class="bi bi-envelope-fill text-light"></i> <span class="fw-normal fst-normal">EMAIL:</span> info@alexadashcams.com</p>
+        </div>
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-4">
+          <h4 class="text-light fs-4">LINKS</h4>
+          <p class="text-light mb-1 fs-6">&nbsp<i class="bi bi-caret-right-fill text-light"></i>&nbspMY ACCOUNT</p>
+          <p class="text-light mb-1 fs-6">&nbsp<i class="bi bi-caret-right-fill text-light"></i>&nbspPRODUCTS</p>
+          <p class="text-light mb-1 fs-6">&nbsp<i class="bi bi-caret-right-fill text-light"></i>&nbspABOUT US</p>
+        </div>
+      </div>
+      <h6 class="border-bottom rounded-1 pt-5"> </h6>
+      <p class="text-white pb-2"> &#169; 2021 ALEXADASHCAMS | ALL RIGHTS RESERVED</p>
+    </div>
+</footer>

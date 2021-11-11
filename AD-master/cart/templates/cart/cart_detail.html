@@ -1,0 +1,83 @@
+{% load cart_tag %}
+
+{% include 'alexadashcams/navbar2.html' %}
+{% load crispy_forms_tags %}
+
+
+                <div class="container">
+                    {% comment %} shopping cart {% endcomment %}
+
+
+                        <div class="cart_section pt-4">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-10 offset-lg-1">
+                                        <div class="cart_container">
+                                            <div class="cart_title"><h3 class="fs-4">Shopping Cart<small> ({{request.session.cart|length}}item in your cart) </small></h3></div>
+                                            <div class="cart_items">
+                                                {% for key,value in request.session.cart.items %}
+                                                    <ul class="cart_list">
+                                                        <li class="cart_item clearfix">
+                                                            <div class="cart_item_image"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560924153/alcatel-smartphones-einsteiger-mittelklasse-neu-3m.jpg" alt=""></div>
+                                                            <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+                                                                <div class="cart_item_name cart_info_col">
+                                                                    <div class="cart_item_title">Name</div>
+                                                                    <div class="cart_item_text">{{value.name}}</div>
+                                                                </div>
+                                                                
+                                                                <div class="cart_item_quantity cart_info_col">
+                                                                    <div class="cart_item_title">Quantity</div>
+                                                                    <div class="cart_item_text">
+                                                                        <a href="{% url 'item_increment' value.product_id %}"><i class="bi bi-plus-square-fill" style="position:relative"></i></a>
+                                                                            <small class="p-2">{{value.quantity}} </small>
+                                                                        <a href="{% url 'item_decrement' value.product_id %}"><i class="bi bi-dash-square-fill" style="position:relative"> </i></a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="cart_item_price cart_info_col">
+                                                                    <div class="cart_item_title">Price</div>
+                                                                    <div class="cart_item_text">{{value.price}} </div>
+                                                                </div>
+                                                                <div class="cart_item_total cart_info_col">
+                                                                    <div class="cart_item_title">Total</div>
+                                                                    <div class="cart_item_text">{{ value.price|multiply:value.quantity }}</div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                {% endfor %}
+
+                                            </div>
+                                            <div class="order_total">
+                                                <div class="order_total_content text-md-right">
+                                                    <div class="order_total_title">Order Total:</div>
+                                                    <div class="order_total_amount">
+                                                        {{ cart_total_amount }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cart_buttons"> <button type="button" class="btn btn-outline-dark">Continue Shopping</button> 
+                                            <button type="button" class="btn btn-dark">Proceed to check-out</button> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    {% comment %} shopping cart {% endcomment %}
+
+
+                    Total Length :: {{request.session.cart|length}}
+
+                    Cart Detail:
+
+                    {% for key,value in request.session.cart.items %}
+                     {{value.name}} {{value.price}} {{value.quantity}} {{value.image}} Total {{ value.price|multiply:value.quantity }}
+
+                    {% endfor %}
+
+
+
+
+                </div>
+

@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 # import random
 # Create your models here.
 class CustomerOrder(models.Model):
-    # S = 10  # number of characters in the string. 
+    # S = 10  # number of characters in the string.  
     # order_name_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k = S))   
 
     order_name_id = models.CharField(max_length=100)

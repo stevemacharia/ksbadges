@@ -53,7 +53,7 @@ class TISNStudentProfile(models.Model):
     images = models.ImageField(upload_to='tisn_pics', default='default.jpg')
     
     def __str__(self):
-       return f'{self.names} Details'
+       return f'{self.names} '
     
     def save(self):
         super().save()

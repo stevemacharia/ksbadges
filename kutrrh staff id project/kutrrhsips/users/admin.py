@@ -18,6 +18,11 @@ from .models import StaffProfile,StudentProfile,TISNStudentProfile
 # admin.site.register(User, UsersAdmin)
 class StaffProfileAdmin(admin.ModelAdmin):
     list_display = ['pf_number','names','position','department','directorate','status','images']
+    # define search columns list, then a search box will be added at the top of Department list page.
+    search_fields = [ 'names', 'pf_number','position', 'department']
+    list_filter = ('status',)
+     # define model data list ordering.
+    # ordering = ('status')
 
     class Meta:
         model = StaffProfile
@@ -27,6 +32,9 @@ admin.site.register(StaffProfile, StaffProfileAdmin)
 
 class TISNStudentProfileAdmin(admin.ModelAdmin):
     list_display = ['admission_number','names','course','start_date','end_date','status','images']
+    # define search columns list, then a search box will be added at the top of Department list page.
+    search_fields = [ 'names','admission_number','course',]
+    list_filter = ('status',)
 
     class Meta:
         model = TISNStudentProfile
@@ -34,6 +42,9 @@ admin.site.register(TISNStudentProfile, TISNStudentProfileAdmin)
 
 class StudentProfileAdmin(admin.ModelAdmin):
     list_display = ['trainee_number','names','department','directorate','start_date','end_date','status','images']
+    # define search columns list, then a search box will be added at the top of Department list page.
+    search_fields = [ 'names', 'trainee_number', 'department',]
+    list_filter = ('status',)
 
     class Meta:
         model = StudentProfile

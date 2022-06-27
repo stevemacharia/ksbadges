@@ -79,7 +79,13 @@ WSGI_APPLICATION = 'kutrrhsips.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME' : 'kutrrhsips',
+        'USER' : 'sips',
+        'PASSWORD' : 'sips@2022!#',
+        'HOST' : 'localhost',
+        'PORT' : '3306',
+        
     }
 }
 
